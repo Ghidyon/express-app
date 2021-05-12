@@ -1,5 +1,7 @@
 // Access express module
 const express = require('express');
+
+// Create server
 const app = express();
 const port = 7070;
 
@@ -67,4 +69,16 @@ const Identity = mongoose.model('identity', identitySchema);
     else console.log({ newUser: identity });
 }); */
 
-// 
+// * Get all user identites
+app.get('/users', (req, res) => {
+    Identity.find({})
+        .then(users => {
+            return res.status(200).json({
+                message: 'successful',
+                users: users
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({ message: err });
+        });
+});

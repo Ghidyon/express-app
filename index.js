@@ -9,7 +9,11 @@ app.use(express.json({ extended: false }));
 
 // Access environmental variables in .env file
 require('dotenv').config();
-const port = 7070;
+
+const { PORT, CONNECTION_URI } = process.env;
+// const { CONNECTION_URI } = process.env;
+
+const port = process.env.PORT || PORT;
 
 // Access mongoose module
 const mongoose = require('mongoose');
@@ -22,7 +26,7 @@ const { Schema } = mongoose;
     - { message: String, data: Object }
     - This means you are to return an object containing a message that tells the client if the request is successful or not, and data object containing your result.
     - If there's an error in the request, the response should return the error message instead.
-    - Get's the data created
+    - Gets the data created
     - Updates the data created
     - Deletes the data created
 
@@ -35,8 +39,7 @@ const { Schema } = mongoose;
 */
 
 // * Connect to a database
-const connectionString = 'mongodb://localhost:27017/users';
-mongoose.connect(connectionString, {
+mongoose.connect(CONNECTION_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -93,7 +96,5 @@ app.get('/users', (req, res) => {
             return res.status(500).json({ message: err });
         });
 });
-
-console.log(process.env.PORT);
 
 // * Update user identity

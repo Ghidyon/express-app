@@ -41,35 +41,8 @@ const connectDB = require('./db');
 // * Connect to database
 connectDB()
 
-// Declare Schema
-const identitySchema = new Schema({
-    name: String,
-    email: String,
-    country: String
-});
-
-// Model database collection from identitySchema
-const Identity = mongoose.model('identity', identitySchema);
-
-// * Create user identities
-/* Identity.insertMany([{
-    name: 'Patricia',
-    email: 'patricia@gmail.com',
-    country: 'United States'
-},
-{
-    name: 'Beckham',
-    email: 'beckham@gmail.com',
-    country: 'England'
-},
-{
-    name: 'Paul',
-    email: 'paul@gmail.com',
-    country: 'Ireland'
-}], (err, identity) => {
-    if (err) throw err;
-    else console.log({ newUser: identity });
-}); */
+// Access model
+const Identity = require('./model');
 
 // * Create a basic express route
 app.get('/', (req, res) => {
@@ -91,4 +64,4 @@ app.get('/users', (req, res) => {
 });
 
 // * Update user identity
-app.listen(PORT, () => console.log(`App is running on port ${PORT}`))
+app.listen(PORT, () => console.log(`App is running on port ${PORT}`));

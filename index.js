@@ -1,24 +1,3 @@
-// Access express module
-const express = require('express');
-
-// Initialize express
-const app = express();
-
-// Initialize express middleware
-app.use(express.json({ extended: false }));
-
-// Access environmental variables in .env file
-require('dotenv').config();
-
-const { PORT, CONNECTION_URI } = process.env;
-// const { CONNECTION_URI } = process.env;
-
-const port = process.env.PORT || PORT;
-
-// Access mongoose module
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
 /* 
     TODO: Create a simple express application that
     - Connects to a database
@@ -38,24 +17,38 @@ const { Schema } = mongoose;
     * You are to submit your github link with the hosted link in the readme file too
 */
 
-// * Connect to a database
-mongoose.connect(CONNECTION_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-}).then(() => {
-    console.log('Successfully connected to database!');
-    app.listen(port, () => console.log(`App running on port:${port}`));
-}).catch(err => handleError(err));
+// Access express module
+const express = require('express');
 
-// * Declare Schema
+// Initialize express
+const app = express();
+
+// Initialize express middleware
+app.use(express.json({ extended: false }));
+
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
+// Access environmental variables in .env file
+require('dotenv').config();
+const { PORT } = process.env;
+
+// const port = process.env.PORT || PORT;
+
+// Access connectDB function
+const connectDB = require('./db');
+
+// * Connect to database
+connectDB()
+
+// Declare Schema
 const identitySchema = new Schema({
     name: String,
     email: String,
     country: String
 });
 
-// * Model database collection from identitySchema
+// Model database collection from identitySchema
 const Identity = mongoose.model('identity', identitySchema);
 
 // * Create user identities
@@ -98,3 +91,4 @@ app.get('/users', (req, res) => {
 });
 
 // * Update user identity
+app.listen(PORT, () => console.log(`App is running on port ${PORT}`))

@@ -1,8 +1,14 @@
 // Access express module
 const express = require('express');
 
-// Create server
+// Initialize express
 const app = express();
+
+// Initialize express middleware
+app.use(express.json({ extended: false }));
+
+// Access environmental variables in .env file
+require('dotenv').config();
 const port = 7070;
 
 // Access mongoose module
@@ -69,6 +75,11 @@ const Identity = mongoose.model('identity', identitySchema);
     else console.log({ newUser: identity });
 }); */
 
+// * Create a basic express route
+app.get('/', (req, res) => {
+    res.json({ message: 'You don access my Application! Oya sitdan!' });
+});
+
 // * Get all user identites
 app.get('/users', (req, res) => {
     Identity.find({})
@@ -82,3 +93,7 @@ app.get('/users', (req, res) => {
             return res.status(500).json({ message: err });
         });
 });
+
+console.log(process.env.PORT);
+
+// * Update user identity

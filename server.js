@@ -33,7 +33,8 @@ const { Schema } = mongoose;
 require('dotenv').config();
 const { PORT } = process.env;
 
-// const port = process.env.PORT || PORT;
+// Start server
+app.listen(PORT, () => console.log(`app running on port ${PORT}`));
 
 // Access connectDB function
 const connectDB = require('./src/db');
@@ -129,5 +130,3 @@ app.delete('/users/:id', (req, res) => {
         }
     });
 });
-
-app.listen(PORT, () => console.log(`App is running on port ${PORT}`));

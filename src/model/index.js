@@ -18,24 +18,4 @@ const identitySchema = new Schema({
 // Model database collection from identitySchema
 const Identity = mongoose.model('identity', identitySchema);
 
-// * Create user identities
-/* Identity.insertMany([{
-    name: 'patricia',
-    email: 'patricia@gmail.com',
-    country: 'united states'
-},
-{
-    name: 'beckham',
-    email: 'beckham@gmail.com',
-    country: 'england'
-},
-{
-    name: 'paul',
-    email: 'paul@gmail.com',
-    country: 'ireland'
-}], (err, identity) => {
-    if (err) throw err;
-    else console.log({ newUser: identity });
-}); */
-
 module.exports = Identity;

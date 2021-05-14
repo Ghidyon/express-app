@@ -26,9 +26,6 @@ const app = express();
 // Initialize express middleware
 app.use(express.json({ extended: false }));
 
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
 // Access environmental variables in .env file
 require('dotenv').config();
 const { PORT } = process.env;
@@ -47,8 +44,7 @@ const Identity = require('./src/model');
 
 // * Create a basic express route
 app.get('/', (req, res) => {
-    // res.json({ message: 'You don jaz my Application! Oya sitdan check am well!' });
-    res.send('You don jaz my Application! Oya sitdan check am well! Omo, see joy');
+    res.send('You don jaz my Application! Oya sip coffee check am well! Omo, see joy');
 });
 
 // * Get all user identites

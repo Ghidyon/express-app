@@ -63,10 +63,22 @@ app.get('/users', (req, res) => {
         });
 });
 
-// * Update user identity
+// * Create a user identity
+app.post('/users', (req, res) => {
+    Identity.create(req.body, (err, identity) => {
+        if (err) res.status(500).json({ error: err });
+        else {
+            return res.status(200).json({
+                message: 'successfully created',
+                newIdentity: identity
+            });
+        }
+    });
+});
+
+// * Update a user's identity
 app.put('/users/:id', (req, res) => {
-    let id = req.params.id;
-    Identity.findByIdAndUpdate(id, req.body, { new: true }, (err, identity) => {
+    Identity.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, identity) => {
         if (err) {
             return res.status(500).json({ error: err });
         }
@@ -77,6 +89,24 @@ app.put('/users/:id', (req, res) => {
             return res.status(200).json({
                 message: 'successfully updated',
                 updatedIdentity: identity
+            });
+        }
+    });
+});
+
+// * Delete a user's identity
+app.delete('/users/:id', (req, res) => {
+    Identity.findByIdAndDelete(req.params.id, (err, identity) => {
+        if (err) {
+            return res.status(500).json({ error: err });
+        }
+        if (!identity) {
+            return res.status(404).json({ message: 'user identity not found' });
+        }
+        else {
+            return res.status(200).json({
+                message: 'successfully deleted',
+                deletedIdentity: identity
             });
         }
     });

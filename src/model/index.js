@@ -1,6 +1,6 @@
 /* 
 TODO:
-- Define Schema
+- Define Model Schema
 - Add data to database
 */
 
@@ -20,22 +20,22 @@ const Identity = mongoose.model('identity', identitySchema);
 
 // * Create user identities
 /* Identity.insertMany([{
-    name: 'Patricia',
+    name: 'patricia',
     email: 'patricia@gmail.com',
-    country: 'United States'
+    country: 'united states'
 },
 {
-    name: 'Beckham',
+    name: 'beckham',
     email: 'beckham@gmail.com',
-    country: 'England'
+    country: 'england'
 },
 {
-    name: 'Paul',
+    name: 'paul',
     email: 'paul@gmail.com',
-    country: 'Ireland'
+    country: 'ireland'
 }], (err, identity) => {
     if (err) throw err;
     else console.log({ newUser: identity });
-});
- */
+}); */
+
 module.exports = Identity;

@@ -36,13 +36,13 @@ const { PORT } = process.env;
 // const port = process.env.PORT || PORT;
 
 // Access connectDB function
-const connectDB = require('./db');
+const connectDB = require('./src/db');
 
 // * Connect to database
-connectDB()
+connectDB();
 
 // Access model
-const Identity = require('./model');
+const Identity = require('./src/model');
 
 // * Create a basic express route
 app.get('/', (req, res) => {
@@ -64,4 +64,22 @@ app.get('/users', (req, res) => {
 });
 
 // * Update user identity
+app.put('/users/:id', (req, res) => {
+    let id = req.params.id;
+    Identity.findByIdAndUpdate(id, req.body, { new: true }, (err, identity) => {
+        if (err) {
+            return res.status(500).json({ error: err });
+        }
+        if (!identity) {
+            return res.status(404).json({ message: 'user identity not found' });
+        }
+        else {
+            return res.status(200).json({
+                message: 'successfully updated',
+                updatedIdentity: identity
+            });
+        }
+    });
+});
+
 app.listen(PORT, () => console.log(`App is running on port ${PORT}`));

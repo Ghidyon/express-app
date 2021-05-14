@@ -46,7 +46,8 @@ const Identity = require('./src/model');
 
 // * Create a basic express route
 app.get('/', (req, res) => {
-    res.json({ message: 'You don access my Application! Oya sitdan!' });
+    // res.json({ message: 'You don jaz my Application! Oya sitdan check am well!' });
+    res.send('You don jaz my Application! Oya sitdan check am well! Omo, see joy');
 });
 
 // * Get all user identites
@@ -54,7 +55,7 @@ app.get('/users', (req, res) => {
     Identity.find({})
         .then(users => {
             return res.status(200).json({
-                message: 'successful',
+                message: 'successfully found',
                 users: users
             });
         })
@@ -63,10 +64,27 @@ app.get('/users', (req, res) => {
         });
 });
 
+// * Get a user's identity
+app.get('/users/:id', (req, res) => {
+    Identity.findById(req.params.id, (err, identity) => {
+        if (err) return res.status(500).json({ error: err });
+        if(!identity) {
+            return res.status(400).json({
+                message: 'identity not found',
+            });
+        } else {
+            return res.status(200).json({
+                message: 'successfully found',
+                userIdentity: identity
+            });
+        }
+    });
+});
+
 // * Create a user identity
 app.post('/users', (req, res) => {
     Identity.create(req.body, (err, identity) => {
-        if (err) res.status(500).json({ error: err });
+        if (err) return res.status(500).json({ error: err });
         else {
             return res.status(200).json({
                 message: 'successfully created',

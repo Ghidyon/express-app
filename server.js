@@ -80,12 +80,20 @@ app.get('/users/:id', (req, res) => {
 
 // * Create a user identity
 app.post('/users', (req, res) => {
-    Identity.create(req.body, (err, identity) => {
+    const { name, email, country } = req.body;
+    Identity.findOne({ email }, (err, identity) => {
         if (err) return res.status(500).json({ error: err });
-        else {
-            return res.status(200).json({
-                message: 'successfully created',
-                newIdentity: identity
+        if (identity) {
+            res.status(404).json({ message: 'user identity already exists' });
+        } else {
+            Identity.create(req.body, (err, identity) => {
+                if (err) return res.status(500).json({ error: err });
+                else {
+                    return res.status(200).json({
+                        message: 'successfully created',
+                        newIdentity: identity
+                    });
+                }
             });
         }
     });

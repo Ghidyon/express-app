@@ -25,6 +25,7 @@ const app = express();
 
 // Initialize express middleware
 app.use(express.json({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 // Access environmental variables in .env file
 require('dotenv').config();
@@ -80,7 +81,7 @@ app.get('/users/:id', (req, res) => {
 
 // * Create a user identity
 app.post('/users', (req, res) => {
-    const { name, email, country } = req.body;
+    const { email } = req.body;
     Identity.findOne({ email }, (err, identity) => {
         if (err) return res.status(500).json({ error: err });
         if (identity) {

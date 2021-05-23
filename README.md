@@ -15,6 +15,15 @@ A simple CRUD app for handling CRUD requests on user identities.
   
 ## API Reference
 
+#### User Model
+```
+  {
+    name: String,
+    email: Sting,
+    country: String
+  }
+```
+
 #### Get all users
 
 ```http
@@ -35,12 +44,12 @@ A simple CRUD app for handling CRUD requests on user identities.
 #### Create a user
 
 ```http
-  POST /users/:id
+  POST /users
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required!** Id of user to fetch |
+| Parameter   | Type   | Description                                                 |
+| :---------- | :----- | :---------------------------------------------------------- |
+| `User Model`| `JSON` | **Required!** Create JSON of user using the User Model above|
 
 
 #### Update a user
@@ -72,7 +81,6 @@ To run this project, you will need to add the following environment variables to
 
 `CONNECTION_URI`
 
-  
 ## Run Locally
 
 Clone the project
